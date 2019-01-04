@@ -1,0 +1,100 @@
+#! /bin/bash
+
+#######################################################################################
+#this script to delete safe the compressed files check firstly if it compressed or not 
+###########################################################################
+## argument the file wanted to be deleted 
+
+
+#echo "the number of argument is $#"
+# show all argument on same line
+#echo $@
+##########################################################
+#show all arguments  on  new line
+
+#for i 
+#do
+#echo $i
+#done
+#########################################################
+# same of previous one
+
+#for i in $*
+#do
+#echo $i
+#done
+##########################################################
+
+
+if [ $# == 0 ]
+then
+echo "enter correct arguments "
+else
+	#for index in $(seq 1 $#)
+	for index in $@
+	do
+	namefile=$index
+
+	#check these files are compressed or not if there any one of them is compressed will be exit 
+		
+	result="file "$namefile" | cut -d ":" -f 2 |cut -d "," -f 1"
+	result=$(eval "$result")
+	echo $result
+	if [ "$result" != "gzip compressed data" ]
+	then
+	echo "okaaaaaaaaaaaay"
+	else
+	echo "one of them is compressed "
+	exit
+	fi
+	done
+
+# create  trash directory in home and check it doesn't exist before 
+	if [[ ! -d ~/TRASH ]]	 #not  file is a directory  
+	then
+	echo "not exist "
+	mkdir ~/TRASH	
+	fi
+
+
+# create  compressed  archive file and move to Trash directory
+
+	read -p "enter name of archived: " name 
+	echo `tar czf "$name" "$@"`
+	if [ -e ~/TRASH/"$name" ];then
+	echo "change the name it is already exist"
+	read -p "enter name of archived: " name 
+	echo `tar czf "$name" "$@"`
+	fi
+	echo `mv "$name" ~/TRASH` 
+	
+# change directory to it 
+	cd ~/TRASH
+#check for all compressed archived fiels that they are older than 48 hours  to delete 
+ 
+	find . -name *.gz -type f -mmin +2880 -delete
+
+
+     
+fi
+
+
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
