@@ -72,7 +72,7 @@ else
 	cd ~/TRASH
 #check for all compressed archived fiels that they are older than 48 hours  to delete 
  
-	find . -name *.gz -type f -mmin +2880 -delete
+	find . -name '*.gz' -type f -mmin +2880 -delete
 
 
      
