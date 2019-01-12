@@ -1,0 +1,16 @@
+# as root :
+# while add or remove attributes :D 
+
+ cd /tmp
+ rm -rf ItsFOSS
+ mkdir -p ItsFOSS
+ cd ItsFOSS
+ date > a
+ date > b
+ date > c
+# change attribute  by set i stands for immutable ( u cant modify, remove)
+ sudo chattr +i c
+ clear
+ ls -ls
+ rm *
+ ls -ls
